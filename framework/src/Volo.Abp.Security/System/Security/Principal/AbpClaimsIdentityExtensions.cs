@@ -8,7 +8,7 @@ namespace System.Security.Principal;
 
 public static class AbpClaimsIdentityExtensions
 {
-    public static Guid? FindUserId([NotNull] this ClaimsPrincipal principal)
+    public static string FindUserId([NotNull] this ClaimsPrincipal principal)
     {
         Check.NotNull(principal, nameof(principal));
 
@@ -18,15 +18,10 @@ public static class AbpClaimsIdentityExtensions
             return null;
         }
 
-        if (Guid.TryParse(userIdOrNull.Value, out Guid guid))
-        {
-            return guid;
-        }
-
-        return null;
+        return userIdOrNull.Value;
     }
 
-    public static Guid? FindUserId([NotNull] this IIdentity identity)
+    public static string FindUserId([NotNull] this IIdentity identity)
     {
         Check.NotNull(identity, nameof(identity));
 
@@ -38,15 +33,10 @@ public static class AbpClaimsIdentityExtensions
             return null;
         }
 
-        if (Guid.TryParse(userIdOrNull.Value, out var guid))
-        {
-            return guid;
-        }
-
-        return null;
+        return userIdOrNull.Value;
     }
 
-    public static Guid? FindTenantId([NotNull] this ClaimsPrincipal principal)
+    public static string FindTenantId([NotNull] this ClaimsPrincipal principal)
     {
         Check.NotNull(principal, nameof(principal));
 
@@ -56,12 +46,7 @@ public static class AbpClaimsIdentityExtensions
             return null;
         }
 
-        if (Guid.TryParse(tenantIdOrNull.Value, out var guid))
-        {
-            return guid;
-        }
-
-        return null;
+        return tenantIdOrNull.Value;
     }
 
     public static Guid? FindTenantId([NotNull] this IIdentity identity)

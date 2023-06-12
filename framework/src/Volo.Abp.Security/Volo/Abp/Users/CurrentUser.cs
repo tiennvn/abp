@@ -11,9 +11,9 @@ public class CurrentUser : ICurrentUser, ITransientDependency
 {
     private static readonly Claim[] EmptyClaimsArray = new Claim[0];
 
-    public virtual bool IsAuthenticated => Id.HasValue;
+    public virtual bool IsAuthenticated => !Id.IsNullOrEmpty();
 
-    public virtual Guid? Id => _principalAccessor.Principal?.FindUserId();
+    public virtual string Id => _principalAccessor.Principal?.FindUserId();
 
     public virtual string UserName => this.FindClaimValue(AbpClaimTypes.UserName);
 
@@ -29,7 +29,7 @@ public class CurrentUser : ICurrentUser, ITransientDependency
 
     public virtual bool EmailVerified => string.Equals(this.FindClaimValue(AbpClaimTypes.EmailVerified), "true", StringComparison.InvariantCultureIgnoreCase);
 
-    public virtual Guid? TenantId => _principalAccessor.Principal?.FindTenantId();
+    public virtual string TenantId => _principalAccessor.Principal?.FindTenantId();
 
     public virtual string[] Roles => FindClaims(AbpClaimTypes.Role).Select(c => c.Value).Distinct().ToArray();
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using JetBrains.Annotations;
 
 namespace Volo.Abp.Users;
@@ -9,7 +8,7 @@ public interface ICurrentUser
     bool IsAuthenticated { get; }
 
     [CanBeNull]
-    Guid? Id { get; }
+    string Id { get; }
 
     [CanBeNull]
     string UserName { get; }
@@ -30,7 +29,7 @@ public interface ICurrentUser
 
     bool EmailVerified { get; }
 
-    Guid? TenantId { get; }
+    string TenantId { get; }
 
     [NotNull]
     string[] Roles { get; }

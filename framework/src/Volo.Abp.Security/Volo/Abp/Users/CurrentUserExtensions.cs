@@ -25,41 +25,33 @@ public static class CurrentUserExtensions
         return value.To<T>();
     }
 
-    public static Guid GetId(this ICurrentUser currentUser)
+    public static string GetId(this ICurrentUser currentUser)
     {
         Debug.Assert(currentUser.Id != null, "currentUser.Id != null");
 
-        return currentUser.Id.Value;
+        return currentUser.Id;
     }
 
-    public static Guid? FindImpersonatorTenantId([NotNull] this ICurrentUser currentUser)
+    public static string FindImpersonatorTenantId([NotNull] this ICurrentUser currentUser)
     {
         var impersonatorTenantId = currentUser.FindClaimValue(AbpClaimTypes.ImpersonatorTenantId);
         if (impersonatorTenantId.IsNullOrWhiteSpace())
         {
             return null;
         }
-        if (Guid.TryParse(impersonatorTenantId, out var guid))
-        {
-            return guid;
-        }
 
-        return null;
+        return impersonatorTenantId;
     }
 
-    public static Guid? FindImpersonatorUserId([NotNull] this ICurrentUser currentUser)
+    public static string FindImpersonatorUserId([NotNull] this ICurrentUser currentUser)
     {
         var impersonatorUserId = currentUser.FindClaimValue(AbpClaimTypes.ImpersonatorUserId);
         if (impersonatorUserId.IsNullOrWhiteSpace())
         {
             return null;
         }
-        if (Guid.TryParse(impersonatorUserId, out var guid))
-        {
-            return guid;
-        }
 
-        return null;
+        return impersonatorUserId;
     }
 
     public static string FindImpersonatorTenantName([NotNull] this ICurrentUser currentUser)
