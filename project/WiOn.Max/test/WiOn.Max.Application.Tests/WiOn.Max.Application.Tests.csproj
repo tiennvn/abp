@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\WiOn.Max.Application\WiOn.Max.Application.csproj" />
+    <ProjectReference Include="..\..\src\WiOn.Max.Application\WiOn.Max.Application.csproj" />
     <ProjectReference Include="..\WiOn.Max.Domain.Tests\WiOn.Max.Domain.Tests.csproj" />
   </ItemGroup>
 
