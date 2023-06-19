@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\common.props" />
+  <Import Project="..\..\..\..\common.props" />
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WiOn.Max.EntityFrameworkCore\WiOn.Max.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\..\src\WiOn.Max.EntityFrameworkCore\WiOn.Max.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\WiOn.Max.TestBase\WiOn.Max.TestBase.csproj" />
-    <ProjectReference Include="..\..\framework\src\Volo.Abp.EntityFrameworkCore.Sqlite\Volo.Abp.EntityFrameworkCore.Sqlite.csproj" />
+    <ProjectReference Include="..\..\..\..\framework\src\Volo.Abp.EntityFrameworkCore.Sqlite\Volo.Abp.EntityFrameworkCore.Sqlite.csproj" />
   </ItemGroup>
 
   <ItemGroup>
