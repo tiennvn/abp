@@ -1,0 +1,1 @@
+abp new Tien.New -t app -u mvc --tiered -o ./NewProject -dbms PostgreSQL --no-random-port
