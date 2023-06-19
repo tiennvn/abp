@@ -1,0 +1,1 @@
+abp new WiOn.Max -t app -u mvc --tiered -dbms PostgreSQL --no-random-port --local-framework-ref --abp-path ..\..\
