@@ -1,0 +1,20 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+name: WiOnTizet
+services:
+- name: AuthServer
+  project: ..\src\WiOn.Tizet.AuthServer\WiOn.Tizet.AuthServer.csproj
+  bindings:
+  - port: 44385
+    protocol: https
+
+- name: Host
+  project: ..\src\WiOn.Tizet.HttpApi.Host\WiOn.Tizet.HttpApi.Host.csproj
+  bindings:
+  - port: 44343
+    protocol: https
+
+- name: Web
+  project: ..\src\WiOn.Tizet.Web\WiOn.Tizet.Web.csproj
+  bindings:
+  - port: 44353
+    protocol: https
