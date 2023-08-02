@@ -10,11 +10,13 @@ public class RemoteServiceValidationErrorInfo
 {
     /// <summary>
     /// Validation error message.
+    /// Nội dung vi phạm lỗi.
     /// </summary>
     public string Message { get; set; }
 
     /// <summary>
     /// Relate invalid members (fields/properties).
+    /// Các trường vi phạm kiểm tra ràng buộc dữ liệu
     /// </summary>
     public string[] Members { get; set; }
 
