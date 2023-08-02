@@ -9,6 +9,8 @@
     <Import_RootNamespace>Share</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)1.run-tye.bat" />
+    <None Include="$(MSBuildThisFileDirectory)run-tye.ps1" />
     <None Include="$(MSBuildThisFileDirectory)tye.yaml" />
   </ItemGroup>
 </Project>
