@@ -3,21 +3,21 @@
 namespace Volo.Abp.Http;
 
 /// <summary>
-/// Used to store information about a validation error.
+/// Chứa thông tin của những lỗi ràng buộc dữ liệu đầu vào
 /// </summary>
 [Serializable]
 public class RemoteServiceValidationErrorInfo
 {
     /// <summary>
-    /// Validation error message.
-    /// Nội dung vi phạm lỗi.
+    /// Nội dung lỗi ràng buộc dữ liệu
     /// </summary>
+    /// <example>Trường Name là bắt buộc.</example>
     public string Message { get; set; }
 
     /// <summary>
-    /// Relate invalid members (fields/properties).
     /// Các trường vi phạm kiểm tra ràng buộc dữ liệu
     /// </summary>
+    /// <example>["name"]</example>
     public string[] Members { get; set; }
 
     /// <summary>

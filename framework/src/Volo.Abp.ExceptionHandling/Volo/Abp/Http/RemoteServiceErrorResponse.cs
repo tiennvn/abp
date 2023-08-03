@@ -1,7 +1,7 @@
 ﻿namespace Volo.Abp.Http;
 
 /// <summary>
-/// Thông tin phản hồi khi xảy ra lỗi
+/// Thông tin phản hồi từ server khi xảy ra lỗi
 /// </summary>
 public class RemoteServiceErrorResponse
 {

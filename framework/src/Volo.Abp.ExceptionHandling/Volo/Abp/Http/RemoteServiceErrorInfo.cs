@@ -4,41 +4,42 @@ using System.Collections;
 namespace Volo.Abp.Http;
 
 /// <summary>
-/// Used to store information about an error.
-/// Thông tin của lỗi.
+/// Object chứa thông tin của lỗi
 /// </summary>
 [Serializable]
 public class RemoteServiceErrorInfo
 {
     /// <summary>
-    /// Error code. 
-    /// Mã lối.
+    /// Mã lối
     /// </summary>
-    /// <example>tesst:code:0001</example>
+    /// <example>Authentication.Account:0010</example>
     public string Code { get; set; }
 
     /// <summary>
-    /// Error message. 
-    /// Nội dung lỗi.
+    /// Nội dung lỗi
     /// </summary>
-    /// <example>Lỗi kiểm tra dữ liệu</example>
+    /// <example>Tài khoản của bạn đã bị khóa</example>
     public string Message { get; set; }
 
     /// <summary>
-    /// Error details.
-    /// Chi tiết lỗi.
+    /// Chi tiết lỗi
     /// </summary>
+    /// <example>Các lỗi sau đây đã được phát hiện trong quá trình xác nhận</example>
     public string Details { get; set; }
 
     /// <summary>
-    /// Error data.
-    /// Dữ liệu liên quan đến lỗi.
+    /// Dữ liệu liên quan đến lỗi. Tùy vào từng trường hợp lỗi, mà sẽ có key khác nhau
     /// </summary>
+    /// <example>
+    /// {
+    ///   "currentTime": "2023-08-03T07:48:05.0051498Z",
+    ///   "nextResendOtpTime": "2023-08-03T07:48:33.6346059Z"
+    /// }
+    /// </example>
     public IDictionary Data { get; set; }
 
     /// <summary>
-    /// Validation errors if exists.
-    /// Danh sách thông tin của lỗi kiểm tra dữ liệu đầu vào.
+    /// Danh sách thông tin của lỗi kiểm tra dữ liệu đầu vào
     /// </summary>
     public RemoteServiceValidationErrorInfo[] ValidationErrors { get; set; }
 

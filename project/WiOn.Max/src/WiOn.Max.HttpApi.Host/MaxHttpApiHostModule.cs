@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Medallion.Threading;
 using Medallion.Threading.Redis;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,10 +13,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WiOn.Max.EntityFrameworkCore;
-using WiOn.Max.MultiTenancy;
-using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
@@ -24,10 +24,11 @@ using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.DistributedLocking;
-using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
+using WiOn.Max.EntityFrameworkCore;
+using WiOn.Max.MultiTenancy;
 
 namespace WiOn.Max;
 
@@ -120,7 +121,24 @@ public class MaxHttpApiHostModule : AbpModule
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Max API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
-            });
+
+                var files = Directory.GetFiles(Path.Combine(paths: Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)), "*.xml");
+                Log.Information("files: {@files}", files);
+                foreach (var filePath in files)
+                {
+                    try
+                    {
+                        options.IncludeXmlComments(filePath);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+            }
+            );
+
+
     }
 
     private void ConfigureDataProtection(
