@@ -131,4 +131,20 @@ public interface IIdentityUserRepository : IBasicRepository<IdentityUser, Guid>
         bool includeDetails = false,
         CancellationToken cancellationToken = default
     );
+
+    Task UpdateRoleAsync(
+        Guid sourceRoleId,
+        Guid? targetRoleId,
+        CancellationToken cancellationToken = default
+    );
+
+    Task UpdateOrganizationAsync(
+        Guid sourceOrganizationId,
+        Guid? targetOrganizationId,
+        CancellationToken cancellationToken = default
+    );
+
+    Task<List<IdentityUserIdWithRoleNames>> GetRoleNamesAsync(
+        IEnumerable<Guid> userIds,
+        CancellationToken cancellationToken = default);
 }

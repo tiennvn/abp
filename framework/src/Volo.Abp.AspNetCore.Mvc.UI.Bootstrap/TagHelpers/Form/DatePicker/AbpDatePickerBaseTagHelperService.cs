@@ -22,7 +22,7 @@ namespace Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form.DatePicker;
 public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelperService<TTagHelper>
     where TTagHelper : AbpDatePickerBaseTagHelper<TTagHelper>
 {
-    protected readonly Dictionary<Type, Func<object, string>> SupportedInputTypes = new() 
+    protected readonly Dictionary<Type, Func<object, string>> SupportedInputTypes = new()
     {
         {
             typeof(string), o =>
@@ -42,11 +42,11 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
                 {
                     return dt.ToString("O");
                 }
-                
+
                 return string.Empty;
             }
         },
-        {typeof(DateTime?), o => ((DateTime?) o)?.ToString("O")},
+        {typeof(DateTime?), o => ((DateTime?) o)?.ToString("O")!},
         {
             typeof(DateTimeOffset), o =>
             {
@@ -54,11 +54,11 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
                 {
                     return dto.ToString("O");
                 }
-                
+
                 return string.Empty;
             }
         },
-        {typeof(DateTimeOffset?), o => ((DateTimeOffset?) o)?.ToString("O")}
+        {typeof(DateTimeOffset?), o => ((DateTimeOffset?) o)?.ToString("O")!}
     };
 
     protected readonly IJsonSerializer JsonSerializer;
@@ -85,12 +85,12 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         InputTagHelper = new InputTagHelper(Generator) { InputTypeName = "text" };
     }
 
-    protected virtual T GetAttribute<T>() where T : Attribute
+    protected virtual T? GetAttribute<T>() where T : Attribute
     {
         return GetAttributeAndModelExpression<T>(out _);
     }
 
-    protected abstract T GetAttributeAndModelExpression<T>(out ModelExpression modelExpression) where T : Attribute;
+    protected abstract T? GetAttributeAndModelExpression<T>(out ModelExpression? modelExpression) where T : Attribute;
 
 
     public async override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
@@ -118,7 +118,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         var optionsAttribute = GetAttributeAndModelExpression<DatePickerOptionsAttribute>(out var modelExpression);
         if (optionsAttribute != null)
         {
-            TagHelper.SetDatePickerOptions(optionsAttribute.GetDatePickerOptions(modelExpression.ModelExplorer));
+            TagHelper.SetDatePickerOptions(optionsAttribute.GetDatePickerOptions(modelExpression!.ModelExplorer)!);
         }
 
         // Open and close button
@@ -161,7 +161,10 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         output.TagMode = TagMode.StartTagAndEndTag;
         output.TagName = "div";
         LeaveOnlyGroupAttributes(context, output);
-        output.Attributes.AddClass("mb-3");
+        if (TagHelper.AddMarginBottomClass)
+        {
+            output.Attributes.AddClass("mb-3");
+        }
 
         output.Content.AppendHtml(innerHtml);
     }
@@ -224,7 +227,8 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
     protected virtual string SurroundInnerHtmlAndGet(TagHelperContext context, TagHelperOutput output, string innerHtml)
     {
-        return "<div class=\"mb-3\">" +
+        var mb = TagHelper.AddMarginBottomClass ? "mb-3" : string.Empty;
+        return $"<div class=\"{mb}\">" +
                Environment.NewLine + innerHtml + Environment.NewLine +
                "</div>";
     }
@@ -250,7 +254,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         return string.Empty;
     }
 
-    protected TagHelperAttributeList ConvertDatePickerOptionsToAttributeList(IAbpDatePickerOptions options)
+    protected TagHelperAttributeList ConvertDatePickerOptionsToAttributeList(IAbpDatePickerOptions? options)
     {
         var attrList = new TagHelperAttributeList();
 
@@ -281,7 +285,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if (options.ShowDropdowns == false)
         {
-            attrList.Add("data-show-dropdowns", options.ShowDropdowns.ToString().ToLowerInvariant());
+            attrList.Add("data-show-dropdowns", options.ShowDropdowns.ToString()!.ToLowerInvariant());
         }
 
         if (options.MinYear != null)
@@ -306,7 +310,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if (options.TimePicker != null)
         {
-            attrList.Add("data-time-picker", options.TimePicker.ToString().ToLowerInvariant());
+            attrList.Add("data-time-picker", options.TimePicker.ToString()!.ToLowerInvariant());
         }
 
         if (options.TimePickerIncrement != null)
@@ -316,12 +320,12 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if (options.TimePicker24Hour != null)
         {
-            attrList.Add("data-time-picker24-hour", options.TimePicker24Hour.ToString().ToLowerInvariant());
+            attrList.Add("data-time-picker24-hour", options.TimePicker24Hour.ToString()!.ToLowerInvariant());
         }
 
         if (options.TimePickerSeconds != null)
         {
-            attrList.Add("data-time-picker-seconds", options.TimePickerSeconds.ToString().ToLowerInvariant());
+            attrList.Add("data-time-picker-seconds", options.TimePickerSeconds.ToString()!.ToLowerInvariant());
         }
 
         if (options.Opens != AbpDatePickerOpens.Center)
@@ -356,17 +360,17 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if (options.AutoApply != null)
         {
-            attrList.Add("data-auto-apply", options.AutoApply.ToString().ToLowerInvariant());
+            attrList.Add("data-auto-apply", options.AutoApply.ToString()!.ToLowerInvariant());
         }
 
         if (options.LinkedCalendars != null)
         {
-            attrList.Add("data-linked-calendars", options.LinkedCalendars.ToString().ToLowerInvariant());
+            attrList.Add("data-linked-calendars", options.LinkedCalendars.ToString()!.ToLowerInvariant());
         }
 
         if (options.AutoUpdateInput != null)
         {
-            attrList.Add("data-auto-update-input", options.AutoUpdateInput.ToString().ToLowerInvariant());
+            attrList.Add("data-auto-update-input", options.AutoUpdateInput.ToString()!.ToLowerInvariant());
         }
 
         if (!options.ParentEl.IsNullOrEmpty())
@@ -388,12 +392,12 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if(options.AlwaysShowCalendars != null)
         {
-            attrList.Add("data-always-show-calendars", options.AlwaysShowCalendars.ToString().ToLowerInvariant());
+            attrList.Add("data-always-show-calendars", options.AlwaysShowCalendars.ToString()!.ToLowerInvariant());
         }
 
         if(options.ShowCustomRangeLabel == false)
         {
-            attrList.Add("data-show-custom-range-label", options.ShowCustomRangeLabel.ToString().ToLowerInvariant());
+            attrList.Add("data-show-custom-range-label", options.ShowCustomRangeLabel.ToString()!.ToLowerInvariant());
         }
 
         if(options.Options != null)
@@ -403,12 +407,12 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if (options.IsUtc != null)
         {
-            attrList.Add("data-is-utc", options.IsUtc.ToString().ToLowerInvariant());
+            attrList.Add("data-is-utc", options.IsUtc.ToString()!.ToLowerInvariant());
         }
 
         if (options.IsIso != null)
         {
-            attrList.Add("data-is-iso", options.IsIso.ToString().ToLowerInvariant());
+            attrList.Add("data-is-iso", options.IsIso.ToString()!.ToLowerInvariant());
         }
 
         if (!options.PickerId.IsNullOrWhiteSpace())
@@ -481,7 +485,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         }
 
         string text;
-        ModelExplorer modelExplorer = null;
+        ModelExplorer? modelExplorer = null;
 
         if (!string.IsNullOrEmpty(TagHelper.InfoText))
         {
@@ -492,7 +496,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
             var infoAttribute = GetAttributeAndModelExpression<InputInfoText>(out var modelExpression);
             if (infoAttribute != null)
             {
-                modelExplorer = modelExpression.ModelExplorer;
+                modelExplorer = modelExpression!.ModelExplorer;
                 text = infoAttribute.Text;
             }
             else
@@ -502,7 +506,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         }
 
         var idAttr = inputTag.Attributes.FirstOrDefault(a => a.Name == "id");
-        modelExplorer ??= GetModelExpression().ModelExplorer;
+        modelExplorer ??= GetModelExpression()!.ModelExplorer;
         var localizedText = TagHelperLocalizer.GetLocalizedText(text, modelExplorer);
 
         var div = new TagBuilder("div");
@@ -553,7 +557,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
     {
         var idAttr = inputTag.Attributes.FirstOrDefault(a => a.Name == "id");
 
-        return idAttr != null ? idAttr.Value.ToString() : string.Empty;
+        return idAttr != null ? idAttr.Value.ToString()! : string.Empty;
     }
 
     protected virtual string GetRequiredSymbol(TagHelperContext context, TagHelperOutput output)
@@ -568,7 +572,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         return GetAttribute<RequiredAttribute>() != null || isHaveRequiredAttribute ? "<span> * </span>" : "";
     }
 
-    protected abstract ModelExpression GetModelExpression();
+    protected abstract ModelExpression? GetModelExpression();
 
     protected virtual async Task<string> GetLabelAsHtmlUsingTagHelperAsync(TagHelperContext context,
         TagHelperOutput output)
@@ -651,7 +655,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
 
         if (infoAttribute != null)
         {
-            return TagHelperLocalizer.GetLocalizedText(infoAttribute.Text, modelExpression.ModelExplorer);
+            return TagHelperLocalizer.GetLocalizedText(infoAttribute.Text, modelExpression!.ModelExplorer);
         }
 
         return string.Empty;
@@ -669,7 +673,7 @@ public abstract class AbpDatePickerBaseTagHelperService<TTagHelper> : AbpTagHelp
         if (attribute != null)
         {
             var placeholderLocalized =
-                TagHelperLocalizer.GetLocalizedText(attribute.Value, modelExpression.ModelExplorer);
+                TagHelperLocalizer.GetLocalizedText(attribute.Value, modelExpression!.ModelExplorer);
 
             inputTagHelperOutput.Attributes.Add("placeholder", placeholderLocalized);
         }

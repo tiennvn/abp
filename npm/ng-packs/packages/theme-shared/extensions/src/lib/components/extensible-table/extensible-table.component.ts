@@ -121,7 +121,7 @@ export class ExtensibleTableComponent<R = any> implements OnChanges {
   }
 
   private getEnum(rowValue: any, list: Array<ABP.Option<any>>) {
-    if (!list) return rowValue;
+    if (!list || list.length < 1) return rowValue;
     const { key } = list.find(({ value }) => value === rowValue) || {};
     return key;
   }
@@ -150,6 +150,10 @@ export class ExtensibleTableComponent<R = any> implements OnChanges {
 
   ngOnChanges({ data }: SimpleChanges) {
     if (!data?.currentValue) return;
+    
+    if (data.currentValue.length < 1) {
+      this.list.totalCount = this.recordsTotal
+    }
 
     this.data = data.currentValue.map((record: any, index: number) => {
       this.propList.forEach(prop => {

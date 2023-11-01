@@ -1,19 +1,17 @@
-﻿using Markdig;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.Ui.LayoutHooks;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Caching;
 using Volo.Abp.GlobalFeatures;
 using Volo.Abp.Http.ProxyScripting.Generators.JQuery;
 using Volo.Abp.Modularity;
+using Volo.Abp.Ui.LayoutHooks;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using Volo.CmsKit.GlobalFeatures;
 using Volo.CmsKit.Localization;
-using Volo.CmsKit.Pages;
 using Volo.CmsKit.Public.Web.Menus;
 using Volo.CmsKit.Public.Web.Pages.CmsKit.Shared.Components.GlobalResources.Script;
 using Volo.CmsKit.Public.Web.Pages.CmsKit.Shared.Components.GlobalResources.Style;
@@ -65,14 +63,6 @@ public class CmsKitPublicWebModule : AbpModule
             options.AddMaps<CmsKitPublicWebModule>(validate: true);
         });
 
-        context.Services
-            .AddSingleton(_ => new MarkdownPipelineBuilder()
-                .UseAutoLinks()
-                .UseBootstrap()
-                .UseGridTables()
-                .UsePipeTables()
-                .Build());
-
         Configure<DynamicJavaScriptProxyOptions>(options =>
         {
             options.DisableModule(CmsKitPublicRemoteServiceConsts.ModuleName);
@@ -82,6 +72,17 @@ public class CmsKitPublicWebModule : AbpModule
         {
             options.KeyPrefix = "CmsKit:";
         });
+
+        if (GlobalFeatureManager.Instance.IsEnabled<PagesFeature>())
+        {
+            Configure<AbpEndpointRouterOptions>(options =>
+            {
+                options.EndpointConfigureActions.Add(context =>
+                {
+                    context.Endpoints.MapCmsPageRoute();
+                });
+            });
+        }
     }
 
     public override void PostConfigureServices(ServiceConfigurationContext context)
@@ -90,7 +91,6 @@ public class CmsKitPublicWebModule : AbpModule
         {
             Configure<RazorPagesOptions>(options =>
             {
-                options.Conventions.AddPageRoute("/Public/CmsKit/Pages/Index", PageConsts.UrlPrefix + "{slug:minlength(1)}");
                 options.Conventions.AddPageRoute("/Public/CmsKit/Blogs/Index", @"/blogs/{blogSlug:minlength(1)}");
                 options.Conventions.AddPageRoute("/Public/CmsKit/Blogs/BlogPost", @"/blogs/{blogSlug}/{blogPostSlug:minlength(1)}");
             });
@@ -109,17 +109,6 @@ public class CmsKitPublicWebModule : AbpModule
                     typeof(GlobalScriptViewComponent)
                 );
             });
-        }
-
-    }
-
-    public override void OnApplicationInitialization(ApplicationInitializationContext context)
-    {
-        var app = context.GetApplicationBuilder();
-        
-        if (GlobalFeatureManager.Instance.IsEnabled<PagesFeature>())
-        {
-            app.UseHomePageDefaultMiddleware();
         }
     }
 }

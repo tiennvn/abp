@@ -182,6 +182,14 @@ public class VoloNugetPackagesVersionUpdater : ITransientDependency
 
                     var versionAttribute = package.Attributes["Version"];
                     var currentVersion = versionAttribute.Value;
+                    
+                    var isLeptonXPackage = packageId.Contains("LeptonX");
+                    if(isLeptonXPackage)
+                    {
+                        //'SemanticVersion.TryParse' can not parse the version if the version contains floating version resolution, such as '*-*'
+                        currentVersion = currentVersion.Replace("*-*", "0").Replace("*", "0");
+                    }
+
                     var isVersionParsed = SemanticVersion.TryParse(currentVersion, out var currentSemanticVersion);
                     if (!isVersionParsed)
                     {
@@ -189,14 +197,13 @@ public class VoloNugetPackagesVersionUpdater : ITransientDependency
                         continue;
                     }
 
-                    var isLeptonXPackage = packageId.Contains("LeptonX");
-
                     Logger.LogDebug("Checking package: \"{0}\" - Current version: {1}", packageId, currentSemanticVersion);
 
                     if (!specifiedVersion.IsNullOrWhiteSpace())
                     {
                         if (isLeptonXPackage)
                         {
+                            Logger.LogWarning("Package: {0} could not be updated. Please manually update the package version yourself to prevent version mismatches.", packageId);
                             continue;
                         }
 
@@ -222,8 +229,28 @@ public class VoloNugetPackagesVersionUpdater : ITransientDependency
                     {
                         if ((includeNightlyPreviews || (currentVersion.Contains("-preview") && !switchToStable)) && !includeReleaseCandidates)
                         {
-                            var latestVersion = latestMyGetVersion == null || isLeptonXPackage ?
-                                await GetLatestVersionFromMyGet(packageId) : latestMyGetVersion;
+                            string latestVersion;
+                            if(isLeptonXPackage)
+                            {
+                                var leptonXPackageName = packageId;
+                                if(includeNightlyPreviews) 
+                                {
+                                    //use LeptonX Lite package as the package name to be able to get the package version from the 'abp-nightly' feed.
+                                    leptonXPackageName = "Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite";
+                                }
+
+                                latestVersion = (await _packageVersionCheckerService.GetLatestVersionOrNullAsync(leptonXPackageName, includeNightlyPreviews, includeReleaseCandidates))?.Version?.ToString();
+                            }
+                            else
+                            {
+                                latestVersion = latestMyGetVersion == null ? await GetLatestVersionFromMyGet(packageId) : latestMyGetVersion;
+                            }
+
+                            if(latestVersion == null)
+                            {
+                                Logger.LogWarning("Package: {0} could not be updated. Please manually update the package version yourself to prevent version mismatches.", packageId);
+                                continue;
+                            }
 
                             if (currentVersion != latestVersion)
                             {

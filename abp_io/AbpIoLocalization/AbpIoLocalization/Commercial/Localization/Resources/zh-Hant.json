@@ -48,6 +48,8 @@
     "IndexPageHeroSection": "<span class=\"first-line\">一個完整的</span><span class=\"second-line\">web開發平臺</span><span class=\"third-line\">基於 <img src=\"{0}\" width=\"110\" class=\"ml-1\" /> 框架</span>",
     "AbpCommercialShortDescription": "ABP商業版提供了預構建的應用程序模塊, 快速的應用程序開發工具, 專業的UI主題, 高級支持等.",
     "LiveDemo": "在線演示",
+    "LiveDemoLead": " <a href=\"{0}\">{1}</a> 使用你的ABP賬號, <a href=\"{2}\">{3}</a> 到 abp.io.<br/>或者填寫下面的表單立即創建一個在線演示",
+    "ThereIsAlreadyAnAccountWithTheGivenEmailAddress": "已經有一個使用該電子郵件地址的賬號: <b>{0}</b><br/> 你可以使用你的賬號登錄以繼續.",
     "GetLicence": "獲得許可",
     "Application": "應用程序",
     "StartupTemplates": "啟動模板",
@@ -131,12 +133,14 @@
     "YourFullName": "你的全名",
     "EmailField": "E-mail地址",
     "YourEmailAddress": "你的e-mail地址",
+    "ValidEmailAddressIsRequired": "請輸入有效的e-mail地址",
     "HowMayWeHelpYou": "我們如何幫助你",
     "SendMessage": "發送消息",
     "Success": "成功",
     "WeWillReplyYou": "你的消息已經發送! 我們會在短時間內給你答復.",
     "GoHome": "回到主頁面",
     "CreateLiveDemo": "創建在線演示",
+    "CreateLiveDemoDescription": "一旦你提交此表單,你將收到一封包含你的演示鏈接的電子郵件.",
     "RegisterToTheNewsletter": "註冊到時事簡報以獲取有關ABP.IO的消息,比如新發布的內容.",
     "EnterYourEmailOrLogin": "輸入你的e-mail地址來創建你的演示或者使用你的已有賬號<a href=\"{0}\">登錄</a>.",
     "ApplicationTemplate": "應用程序模板",
@@ -402,6 +406,8 @@
     "WhatHappensWhenLicenseEndsExplanation4": "許可證到期後，您將無法安裝添加到 ABP 商業平台的新模塊和主題。",
     "WhatHappensWhenLicenseEndsExplanation5": "您不能使用 ABP 套件。",
     "WhatHappensWhenLicenseEndsExplanation6": "您無法再獲得<a href=\"{0}\">高級支持</a>。",
-    "WhatHappensWhenLicenseEndsExplanation7": "如果您想繼續獲得這些好處，您可以延長（更新）您的許可證。如果您在許可到期後 <strong>{3} 天</strong> 內延長許可，將應用以下折扣：團隊許可 {0}；營業執照{1}；企業許可證{2}。"
+    "WhatHappensWhenLicenseEndsExplanation7": "如果您想繼續獲得這些好處，您可以延長（更新）您的許可證。如果您在許可到期後 <strong>{3} 天</strong> 內延長許可，將應用以下折扣：團隊許可 {0}；營業執照{1}；企業許可證{2}。",
+    "DoesTheSubscriptionRenewAutomatically": "許可會自動續費嗎？",
+    "DoesTheSubscriptionRenewAutomaticallyExplanation": "ABP 商業版沒有自動續費的計費模式。因此，在您的許可期結束時，<strong>您的訂閱將不會自動續訂</strong>。如果您希望繼續享受ABP商業版的服務，請在<a href=\"/my-organizations\">組織管理頁面</a>手動進行續費操作。如果您擁有多個組織，您可以點擊即將到期的組織上的\"管理\"按鈕，然後點擊\"立即續費\"按鈕來續訂您的許可。您還可以查看<a href=\"/faq#what-happens-when-license-ends\">許可到期後會發生什麼？</a>部分了解更多信息。"
   }
 }
