@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="7.2.2" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="7.4.1" />
     <ProjectReference Include="..\WiOn.Tizet.Application.Contracts\WiOn.Tizet.Application.Contracts.csproj" />
     <ProjectReference Include="..\WiOn.Tizet.EntityFrameworkCore\WiOn.Tizet.EntityFrameworkCore.csproj" />
   </ItemGroup>
