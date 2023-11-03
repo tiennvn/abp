@@ -1,0 +1,20 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+name: WiOnTizet
+services:
+- name: AuthServer
+  project: ..\src\Wi.Max.AuthServer\Wi.Max.AuthServer.csproj
+  bindings:
+  - port: 44338
+    protocol: https
+
+- name: Host
+  project: ..\src\Wi.Max.HttpApi.Host\Wi.Max.HttpApi.Host.csproj
+  bindings:
+  - port: 44317
+    protocol: https
+
+- name: Web
+  project: ..\src\Wi.Max.Web\Wi.Max.Web.csproj
+  bindings:
+  - port: 44332
+    protocol: https
