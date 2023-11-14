@@ -8,4 +8,4 @@ abp new Acme.BookStore -t app -u mvc --tiered -dbms PostgreSQL --no-random-port 
 
 abp new New.Max -t app -u mvc --tiered -dbms PostgreSQL --no-random-port --local-framework-ref --template-source "D:\002.Project\100.ABPProject\101.ABP_Framework_github\abp\templates\app"
 
-abp new New.Max -t app -u mvc --tiered -dbms PostgreSQL --no-random-port --local-framework-ref --template-source "D:\002.Project\100.ABPProject\101.ABP_Framework_github\abp\templates\app" --abp-path ..\..\..\..\
+abp new Tizet.Pos -t app -u none --separate-auth-server -dbms PostgreSQL --no-random-port --local-framework-ref --template-source "D:\002.Project\100.ABPProject\101.ABP_Framework_github\abp\templates\app" 
