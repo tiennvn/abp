@@ -227,7 +227,9 @@
     "Articles": "Articles",
     "Organizations": "Organizations",
     "ManageAccount": "Manage Account",
-    "ABPProfile": "ABP Profile",
-    "Tickets": "Tickets"
+    "CommunityProfile": "Community Profile",
+    "BlogProfile": "Blog Profile",
+    "Tickets": "Tickets",
+    "Videos": "Videos"
   }
 }

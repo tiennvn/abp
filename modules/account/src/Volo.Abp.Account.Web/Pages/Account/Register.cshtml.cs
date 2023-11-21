@@ -37,7 +37,6 @@ public class RegisterModel : AccountPageModel
     [BindProperty(SupportsGet = true)]
     public string ExternalLoginAuthSchema { get; set; }
 
-    public bool UserNameExtracted { get; set; }
     public IEnumerable<ExternalProviderModel> ExternalProviders { get; set; }
     public IEnumerable<ExternalProviderModel> VisibleExternalProviders => ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
     public bool EnableLocalRegister { get; set; }
@@ -47,13 +46,16 @@ public class RegisterModel : AccountPageModel
     protected IAuthenticationSchemeProvider SchemeProvider { get; }
 
     protected AbpAccountOptions AccountOptions { get; }
+    protected IdentityDynamicClaimsPrincipalContributorCache IdentityDynamicClaimsPrincipalContributorCache { get; }
 
     public RegisterModel(
         IAccountAppService accountAppService,
         IAuthenticationSchemeProvider schemeProvider,
-        IOptions<AbpAccountOptions> accountOptions)
+        IOptions<AbpAccountOptions> accountOptions,
+        IdentityDynamicClaimsPrincipalContributorCache identityDynamicClaimsPrincipalContributorCache)
     {
         SchemeProvider = schemeProvider;
+        IdentityDynamicClaimsPrincipalContributorCache = identityDynamicClaimsPrincipalContributorCache;
         AccountAppService = accountAppService;
         AccountOptions = accountOptions.Value;
     }
@@ -128,7 +130,6 @@ public class RegisterModel : AccountPageModel
                 {
                     Input.UserName = await GetUserNameFromEmail(Input.EmailAddress);
                 }
-                UserNameExtracted = true;
                 await RegisterExternalUserAsync(externalLoginInfo, Input.UserName, Input.EmailAddress);
             }
             else
@@ -161,6 +162,9 @@ public class RegisterModel : AccountPageModel
 
         var user = await UserManager.GetByIdAsync(userDto.Id);
         await SignInManager.SignInAsync(user, isPersistent: true);
+
+        // Clear the dynamic claims cache.
+        await IdentityDynamicClaimsPrincipalContributorCache.ClearAsync(user.Id, user.TenantId);
     }
 
     protected virtual async Task RegisterExternalUserAsync(ExternalLoginInfo externalLoginInfo, string userName, string emailAddress)
@@ -187,6 +191,9 @@ public class RegisterModel : AccountPageModel
         }
 
         await SignInManager.SignInAsync(user, isPersistent: true, ExternalLoginAuthSchema);
+
+        // Clear the dynamic claims cache.
+        await IdentityDynamicClaimsPrincipalContributorCache.ClearAsync(user.Id, user.TenantId);
     }
 
     protected virtual async Task<bool> CheckSelfRegistrationAsync()
