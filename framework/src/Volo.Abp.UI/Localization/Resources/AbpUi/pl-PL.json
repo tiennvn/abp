@@ -13,7 +13,8 @@
     "SavingWithThreeDot": "Zapisywanie...",
     "Actions": "Akcje",
     "Delete": "Usuń",
-    "SuccessfullyDeleted": "Pomyślnie usunięto",
+    "SavedSuccessfully": "Pomyślnie zapisano",
+    "DeletedSuccessfully": "Pomyślnie usunięto",
     "Edit": "Edytuj",
     "Refresh": "Odśwież",
     "Language": "Język",
@@ -51,6 +52,12 @@
     "ManageYourAccount": "Zarządzaj kontem",
     "OthersGroup": "Inny",
     "Today": "Dzisiaj",
-    "Apply": "Stosować"
+    "Apply": "Stosować",
+    "InternetConnectionInfo": "Nie można było wykonać operacji. Twoje połączenie internetowe nie jest w tej chwili dostępne.",
+    "CopiedToTheClipboard": "Skopiowano do schowka",
+    "AddNew": "Dodaj nowe",
+    "ProfilePicture": "Zdjęcie profilowe",
+    "Theme": "Temat",
+    "NotAssigned": "Nie przypisano"
   }
 }

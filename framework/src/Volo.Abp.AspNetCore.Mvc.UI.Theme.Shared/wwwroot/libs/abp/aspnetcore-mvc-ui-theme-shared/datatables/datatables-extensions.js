@@ -240,15 +240,20 @@ var abp = abp || {};
 
             if (tableInstance.aoColumns) {
                 columns = tableInstance.aoColumns;
-            } else {
+            } else if (abp.utils.isFunction(tableInstance.fnSettings)) {
                 columns = tableInstance.fnSettings().aoColumns;
+            }
+
+            if (!columns && abp.utils.isFunction(tableInstance.api)) {
+                var settings = tableInstance.api().settings();
+                if (settings.length === 1 && settings[0].aoColumns) {
+                    columns = settings[0].aoColumns;
+                }
             }
 
             if (!columns) {
                 return;
             }
-
-            var cells = $(nRow).children("td");
 
             for (var colIndex = 0; colIndex < columns.length; colIndex++) {
                 var column = columns[colIndex];
@@ -257,17 +262,25 @@ var abp = abp || {};
                     hideEmptyColumn($actionContainer, tableInstance, colIndex);
 
                     if ($actionContainer) {
-                        var $actionButton = $(cells[colIndex]).find(".abp-action-button");
-                        if ($actionButton.length === 0) {
-                            $(cells[colIndex]).empty().append($actionContainer);
+                        var cells = $(nRow).children("td");
+                        for (var i = 0; i < cells.length; i++) {
+                            var cell = cells[i];
+                            if (cell._DT_CellIndex && cell._DT_CellIndex.column === colIndex) {
+                                var $actionButton = $(cell).find(".abp-action-button");
+                                if ($actionButton.length === 0) {
+                                    $(cell).empty().append($actionContainer);
+                                };
+                                break;
+                            }
                         }
                     }
                 }
             }
         };
 
-        var _existingApiRenderRowActionsFunction = $.fn.dataTableExt.oApi.renderRowActions;
-        $.fn.dataTableExt.oApi.renderRowActions =
+        if ($.fn.dataTableExt.oApi) {
+            var _existingApiRenderRowActionsFunction = $.fn.dataTableExt.oApi.renderRowActions;
+            $.fn.dataTableExt.oApi.renderRowActions =
             function (tableInstance, nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 if (_existingApiRenderRowActionsFunction) {
                     _existingApiRenderRowActionsFunction(tableInstance, nRow, aData, iDisplayIndex, iDisplayIndexFull);
@@ -275,7 +288,8 @@ var abp = abp || {};
 
                 renderRowActions(tableInstance, nRow, aData, iDisplayIndex, iDisplayIndexFull);
             };
-
+        }
+        
         if (!$.fn.dataTable) {
             return;
         }

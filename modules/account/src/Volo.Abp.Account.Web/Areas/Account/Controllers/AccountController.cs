@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -58,6 +59,9 @@ public class AccountController : AbpControllerBase
         ValidateLoginInfo(login);
 
         await ReplaceEmailToUsernameOfInputIfNeeds(login);
+
+        await IdentityOptions.SetAsync();
+
         var signInResult = await SignInManager.PasswordSignInAsync(
             login.UserNameOrEmailAddress,
             login.Password,

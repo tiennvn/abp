@@ -12,6 +12,13 @@ namespace Volo.Docs.Documents
         Task<List<DocumentInfo>> GetUniqueListDocumentInfoAsync(CancellationToken cancellationToken = default);
 
         Task<List<Document>> GetListByProjectId(Guid projectId, CancellationToken cancellationToken = default);
+        
+        Task<List<Document>> GetUniqueDocumentsByProjectIdPagedAsync(Guid projectId, int skipCount, int maxResultCount, CancellationToken cancellationToken = default);
+        
+        Task<long> GetUniqueDocumentCountByProjectIdAsync(Guid projectId, CancellationToken cancellationToken = default);
+        
+        Task UpdateProjectLastCachedTimeAsync(Guid projectId, DateTime cachedTime,
+            CancellationToken cancellationToken = default);
 
         Task<Document> FindAsync(Guid projectId,
             string name,

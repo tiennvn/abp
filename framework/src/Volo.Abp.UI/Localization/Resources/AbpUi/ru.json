@@ -13,7 +13,8 @@
     "SavingWithThreeDot": "Сохранение...",
     "Actions": "Действия",
     "Delete": "Удалить",
-    "SuccessfullyDeleted": "Успешно удалено",
+    "SavedSuccessfully": "Успешно сохранено",
+    "DeletedSuccessfully": "Успешно удалено",
     "Edit": "Редактировать",
     "Refresh": "Обновить",
     "Language": "Язык",
@@ -51,6 +52,12 @@
     "ManageYourAccount": "Настройте свой аккаунт",
     "OthersGroup": "Другой",
     "Today": "Сегодня",
-    "Apply": "Применять"
+    "Apply": "Применять",
+    "InternetConnectionInfo": "Операцию выполнить не удалось. Ваше интернет-соединение в данный момент недоступно.",
+    "CopiedToTheClipboard": "Скопировано в буфер обмена",
+    "AddNew": "Добавить новое",
+    "ProfilePicture": "Изображение профиля",
+    "Theme": "Тема",
+    "NotAssigned": "Не назначен"
   }
 }

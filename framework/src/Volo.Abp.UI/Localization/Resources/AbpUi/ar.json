@@ -13,7 +13,8 @@
     "SavingWithThreeDot": "حفظ...",
     "Actions": "الإجراءات",
     "Delete": "حذف",
-    "SuccessfullyDeleted": "تم الحذف بنجاح",
+    "SavedSuccessfully": "تم الحفظ  بنجاح",
+    "DeletedSuccessfully": "تم الحذف بنجاح",
     "Edit": "تعديل",
     "Refresh": "تحديث",
     "Language": "لغة",
@@ -51,6 +52,12 @@
     "ManageYourAccount": "إدارة حسابك",
     "OthersGroup": "آخرون",
     "Today": "اليوم",
-    "Apply": "يتقدم"
+    "Apply": "يتقدم",
+    "InternetConnectionInfo": "لا يمكن تنفيذ العملية. اتصالك بالإنترنت غير متوفر في الوقت الراهن.",
+    "CopiedToTheClipboard": "تم النسخ إلى الحافظة",
+    "AddNew": "اضف جديد",
+    "ProfilePicture": "الصوره الشخصيه",
+    "Theme": "سمة",
+    "NotAssigned": "غيرمعتمد"
   }
 }

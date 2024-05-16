@@ -13,7 +13,8 @@
     "SavingWithThreeDot": "Tallennetaan...",
     "Actions": "Toiminnot",
     "Delete": "Poista",
-    "SuccessfullyDeleted": "Poistettu onnistuneesti",
+    "SavedSuccessfully": "Tallennettu onnistuneesti",
+    "DeletedSuccessfully": "Poistettu onnistuneesti",
     "Edit": "Muokkaa",
     "Refresh": "Virkistä",
     "Language": "Kieli",
@@ -51,6 +52,12 @@
     "ManageYourAccount": "Hallitse tiliäsi",
     "OthersGroup": "Muut",
     "Today": "Tänään",
-    "Apply": "Käytä"
+    "Apply": "Käytä",
+    "InternetConnectionInfo": "Toimenpidettä ei voitu suorittaa. Internetyhteytesi ei ole tällä hetkellä käytettävissä.",
+    "CopiedToTheClipboard": "Kopioitu leikepöydälle",
+    "AddNew": "Lisää uusi",
+    "ProfilePicture": "Profiilikuva",
+    "Theme": "Teema",
+    "NotAssigned": "Ei määritetty"
   }
 }
